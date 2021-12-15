@@ -70,8 +70,6 @@ auto parse(config &dest, int argc, char **argv) noexcept -> bool {
         dest.impl = type_e::smart;
       } else if (opt == "h") {
         dest.impl = type_e::hardware;
-        fprintf(::stderr, "Not implemented: -t %s\n", format(dest.impl));
-        return false;
       } else {
         fprintf(::stderr, "Cannot parse: -t %s\n", opt.c_str());
         return false;
@@ -126,24 +124,34 @@ auto main(int argc, char **argv) noexcept -> int {
       return runner<config::small, type_e::weak>{}(config.cpus);
     case (config::small + (size_t)type_e::smart):
       return runner<config::small, type_e::smart>{}(config.cpus);
+    case (config::small + (size_t)type_e::hardware):
+      return runner<config::small, type_e::hardware>{}(config.cpus);
     case (config::medium + (size_t)type_e::strong):
       return runner<config::medium, type_e::strong>{}(config.cpus);
     case (config::medium + (size_t)type_e::weak):
       return runner<config::medium, type_e::weak>{}(config.cpus);
     case (config::medium + (size_t)type_e::smart):
       return runner<config::medium, type_e::smart>{}(config.cpus);
+    case (config::medium + (size_t)type_e::hardware):
+      return runner<config::medium, type_e::hardware>{}(config.cpus);
     case (config::large + (size_t)type_e::strong):
       return runner<config::large, type_e::strong>{}(config.cpus);
     case (config::large + (size_t)type_e::weak):
       return runner<config::large, type_e::weak>{}(config.cpus);
     case (config::large + (size_t)type_e::smart):
       return runner<config::large, type_e::smart>{}(config.cpus);
+    case (config::large + (size_t)type_e::hardware):
+      return runner<config::large, type_e::hardware>{}(config.cpus);
     case (config::xlarge + (size_t)type_e::strong):
       return runner<config::xlarge, type_e::strong>{}(config.cpus);
     case (config::xlarge + (size_t)type_e::weak):
       return runner<config::xlarge, type_e::weak>{}(config.cpus);
     case (config::xlarge + (size_t)type_e::smart):
       return runner<config::xlarge, type_e::smart>{}(config.cpus);
+    case (config::xlarge + (size_t)type_e::hardware):
+      return runner<config::xlarge, type_e::hardware>{}(config.cpus);
+    default:
+      fprintf(::stderr, "Not supported\n");
     }
   }
 
